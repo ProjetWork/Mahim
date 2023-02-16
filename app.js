@@ -155,6 +155,7 @@ app.post('/commande',async(req,res)=>{
      });
     }
 })
+app.get('/', (req,res)=> res.send('ok'))
 
 app.listen(4000,()=>{
     console.log('running')
