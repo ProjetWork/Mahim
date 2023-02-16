@@ -1,0 +1,20 @@
+{
+  "name": "mahim-server",
+  "version": "1.0.0",
+  "description": "le server de mahim ",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "richard sagno",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase": "^9.17.1",
+    "node-fetch": "^2.6.9",
+    "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
