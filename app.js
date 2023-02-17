@@ -1,5 +1,6 @@
 const express = require('express')
-const {getFirestore,updateDoc, doc, getDoc} = require('firebase/firestore')
+const {getFirestore,updateDoc, doc, getDoc , setDoc} = require('firebase/firestore')
+const {getAuth , createUserWithEmailAndPassword} = require('firebase/auth')
 const fetch = require('node-fetch')
 const {App} = require('./fi')
 const app = express()
@@ -78,7 +79,7 @@ app.post('/createuser',async(req,res)=>{
           let take = reftoken.data()
           let data= {
             'outboundSMSMessageRequest': {
-              'address': `tel:+224${req.body.numero}`,
+              'address': `tel:+224${req.body.numero}`,   
               'senderAddress': 'tel:+2240000',
               "senderName": "MAHIM",
               'outboundSMSTextMessage': {
@@ -169,6 +170,31 @@ app.post('/commande',async(req,res)=>{
     }
 })
 app.get('/', (req,res)=> res.send('ok'))
+//creation de nouvelle utilisateur
+app.post('/user',(req,res)=>{
+  let password =  `${Math.floor(Math.random() * 10)}` + `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` 
+  const auth = getAuth(App)
+  createUserWithEmailAndPassword(auth , req.body.email , password).then((user)=>{
+       const refuser = doc(db,"USERS" , user.user.uid)
+       setDoc(refuser,{
+        CODEID : req.body.code ,
+        IdE:req.body.ide ,
+        bon:{
+            active : true ,
+            montant : 0 
+        },
+        credit : {active : true , montant : 500000},
+        email:req.body.email ,
+        id:user.user.uid ,
+        password:password ,
+        nom : req.body.nom , 
+         numero : req.body.numero , 
+         nomE : req.body.nome 
+       })
+       return res.status(201).json({message:"succes"})
+  })
+})
+
 
 app.listen(4000,()=>{
     console.log('running')
