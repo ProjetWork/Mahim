@@ -4,6 +4,8 @@ const fetch = require('node-fetch')
 const {App} = require('./fi')
 const app = express()
 //server middleware
+
+app.use(express.json())
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -16,7 +18,6 @@ app.use(function(req, res, next) {
       return next();
     }
   })
-app.use(express.json())
 const db = getFirestore(App) 
 //renouvelation des token 
 app.post('/renewtoken',(req,res)=>{
