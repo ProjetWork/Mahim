@@ -27,7 +27,7 @@ app.post('/renewtoken',(req,res)=>{
           token:jsonrespone.access_token 
         })
         console.log(jsonrespone.access_token)
-       res.status(201).send('bien')
+       res.status(201).json({message: 'bien'})
     })
       
 })
@@ -54,8 +54,11 @@ app.post('/otp',async(req,res)=>{
                 'Content-Type': 'application/json'
             },
             body:  data 
-        }).then(()=>{
-            res.status(201).send('ok')
+        }).then((res)=>{
+            console.log(res.json())
+            res.status(201).json({message: 'bien'})
+        }).catch((err)=>{
+            console.log(err)
         });
        }
     
@@ -84,7 +87,7 @@ app.post('/createuser',async(req,res)=>{
             },
             body:  data 
         }).then(()=>{
-            res.status(201).send('ok')
+            res.status(201).json({message: 'bien'})
         });
        }
 }) 
@@ -113,7 +116,7 @@ app.post('/createbon',async(req,res)=>{
          },
          body:  data 
      }).then(()=>{
-         res.status(201).send('ok')
+        res.status(201).json({message: 'bien'})
      });
     }
 }) 
@@ -153,7 +156,7 @@ app.post('/commande',async(req,res)=>{
             },
             body:  data 
         })
-         res.status(201).send('ok')
+        res.status(201).json({message: 'bien'})
      });
     }
 })
