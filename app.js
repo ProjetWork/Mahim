@@ -73,6 +73,7 @@ app.post('/otp',async(req,res)=>{
    
 })
 //pour le message de la creation utilisateur 
+let name = req.body.nom + ' '+ req.body.prenom
 app.post('/createuser',async(req,res)=>{
     const reftoken = await getDoc(doc(db,"APPINFO", "e1fBtAfuGrhhOKtjXVDZ")) 
        if(reftoken.exists()){
@@ -83,7 +84,7 @@ app.post('/createuser',async(req,res)=>{
               'senderAddress': 'tel:+2240000',
               "senderName": "MAHIM",
               'outboundSMSTextMessage': {
-                  'message': `Bonjour Mr/Mme ${req.body.nom} votre compte à été creé dans MAHIM (achéteur rapide) voici votre code : ${req.body.code} pour la connexion \n vous beneficiez d'un montant  de 500.000 GNF comme montant maximal pour tout vos achat à crédit dans mahim.com ` 
+                  'message': `Bonjour Mr/Mme ${name} votre compte à été creé dans MAHIM (achéteur rapide) voici votre code : ${req.body.code} pour la connexion \n vous beneficiez d'un montant  de 500.000 GNF comme montant maximal pour tout vos achat à crédit dans mahim.com ` 
               }
           }
             }
