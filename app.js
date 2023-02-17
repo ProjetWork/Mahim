@@ -1,9 +1,11 @@
 const express = require('express')
+var cors = require('cors')
 const {getFirestore,updateDoc, doc, getDoc} = require('firebase/firestore')
 const fetch = require('node-fetch')
 const {App} = require('./fi')
 const app = express()
 //server middleware
+app.use(cors())
 app.use(express.json())
 const db = getFirestore(App) 
 //renouvelation des token 
@@ -22,7 +24,7 @@ app.post('/renewtoken',(req,res)=>{
       }).then(async(jsonrespone)=>{
         const refApp = doc(db,"APPINFO","e1fBtAfuGrhhOKtjXVDZ")
         await updateDoc(refApp,{
-          token:jsonrespone.access_token
+          token:jsonrespone.access_token 
         })
         console.log(jsonrespone.access_token)
        res.status(201).send('bien')
