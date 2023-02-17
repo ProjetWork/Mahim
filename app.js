@@ -65,13 +65,15 @@ app.post('/otp',async(req,res)=>{
                 'Content-Type': 'application/json'
             },
             body:  JSON.stringify(data)
-        }).then((res1)=>{
-            console.log(res1.status)
+        }).then((res1)=>{ 
+            console.log(res1.status) 
+            res.sendStatus(201).json({message : 'richard'})
         }).catch((err)=>{
             console.log(err)
+            res.sendStatus(201).json({message : 'richard'})
         });
        }
-    
+   
 })
 //pour le message de la creation utilisateur 
 app.post('/createuser',async(req,res)=>{
