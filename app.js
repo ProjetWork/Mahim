@@ -173,6 +173,7 @@ app.get('/', (req,res)=> res.send('ok'))
 //creation de nouvelle utilisateur
 app.post('/user',(req,res)=>{
   let password =  `${Math.floor(Math.random() * 10)}` + `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` +  `${Math.floor(Math.random() * 10)}` 
+  let name = req.body.nom + ' '+ req.body.prenom
   const auth = getAuth(App)
   createUserWithEmailAndPassword(auth , req.body.email , password).then((user)=>{
        const refuser = doc(db,"USERS" , user.user.uid)
@@ -187,7 +188,7 @@ app.post('/user',(req,res)=>{
         email:req.body.email ,
         id:user.user.uid ,
         password:password ,
-        nom : req.body.nom , 
+        nom : name , 
          numero : req.body.numero , 
          nomE : req.body.nome 
        })
