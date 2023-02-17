@@ -7,16 +7,12 @@ const app = express()
 
 app.use(express.json())
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
+    res.header('Access-Control-Allow-Origin', req.get('Origin') || 'http://localhost:8100');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Expose-Headers', 'Content-Length');  
     res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range'); 
-    if (req.method == 'OPTIONS') {
-      return res.sendStatus(200);
-    } else {
-      return next();
-    }
+    next()
   })
 const db = getFirestore(App) 
 //renouvelation des token 
@@ -67,10 +63,10 @@ app.post('/otp',async(req,res)=>{
             body:  JSON.stringify(data)
         }).then((res1)=>{ 
             console.log(res1.status) 
-            res.sendStatus(201).json({message : 'richard'})
+            return res.status(201).json({message:"notification recus"})
         }).catch((err)=>{
             console.log(err)
-            res.sendStatus(201).json({message : 'richard'})
+            return res.status(201).json({message:"notification non recus"})
         });
        }
    
@@ -99,7 +95,7 @@ app.post('/createuser',async(req,res)=>{
             },
             body:  data 
         }).then(()=>{
-            res.status(201).json({message: 'bien'})
+            return res.status(201).json({message:"notification recus"})
         });
        }
 }) 
@@ -181,7 +177,6 @@ app.listen(4000,()=>{
 
 app.use((err, req, res, next) => {
     console.error(err.message) 
-    res.status(500).send('Something broke!')
     next()
   })
 
