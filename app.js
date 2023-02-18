@@ -97,7 +97,8 @@ app.post('/createuser',async(req,res)=>{
                 'Content-Type': 'application/json'
             },
             body:  data 
-        }).then(()=>{
+        }).then((data)=>{
+            console.log(data.status)
             return res.status(201).json({message:"notification recus"})
         });
        }
@@ -183,7 +184,7 @@ app.post('/user',(req,res)=>{
         CODEID : req.body.code ,
         IdE:req.body.ide ,
         bon:{
-            active : true ,
+            active : false ,
             montant : 0 
         },
         credit : {active : true , montant : 500000},
