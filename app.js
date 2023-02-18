@@ -120,11 +120,11 @@ app.post('/createbon',async(req,res)=>{
            'senderAddress': 'tel:+2240000',
            "senderName": "MAHIM",
            'outboundSMSTextMessage': {
-               'message': `Bonjour Mr/Mme ${req.body.nom} vous venez de recevoir un montant de ${req.body.montant} comme  bon d'achat dans Mahim de la part de ${req.body.E} ` 
+               'message': `Bonjour Mr/Mme ${req.body.nom} vous venez de recevoir un montant de ${req.body.montant.toLocaleString('en-US')} GNF comme  bon d'achat dans Mahim de la part de ${req.body.E} ` 
            }
        }
          }
- 
+         
      fetch('https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B2240000/requests', {
          method: 'POST',
          headers: {
