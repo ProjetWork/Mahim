@@ -3,6 +3,7 @@ const {getFirestore,updateDoc, doc, getDoc , setDoc} = require('firebase/firesto
 const {getAuth , createUserWithEmailAndPassword} = require('firebase/auth')
 const fetch = require('node-fetch')
 const {App} = require('./fi')
+const { json } = require('express')
 const app = express()
 //server middleware
 
@@ -76,12 +77,13 @@ app.post('/otp',async(req,res)=>{
 
 app.post('/createuser',async(req,res)=>{
     let name = req.body.nom + ' '+ req.body.prenom
+    let numero = req.body.numero
     const reftoken = await getDoc(doc(db,"APPINFO", "e1fBtAfuGrhhOKtjXVDZ")) 
        if(reftoken.exists()){
           let take = reftoken.data() 
           let data= {
             'outboundSMSMessageRequest': {
-              'address': `tel:+224${req.body.numero}`,   
+              'address': `tel:+224${numero}`,   
               'senderAddress': 'tel:+2240000',
               "senderName": "MAHIM",
               'outboundSMSTextMessage': {
@@ -96,9 +98,12 @@ app.post('/createuser',async(req,res)=>{
                 'Authorization': `Bearer ${take.token}` ,
                 'Content-Type': 'application/json'
             },
-            body:  data 
+            body:  JSON.stringify(data)
         }).then((data)=>{
-            console.log(data.status)
+            return data.json()
+        }).then((re)=>{
+            console.log(re)
+            console.log(req.body)
             return res.status(201).json({message:"notification recus"})
         });
        }
