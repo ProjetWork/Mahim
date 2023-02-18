@@ -131,7 +131,7 @@ app.post('/createbon',async(req,res)=>{
              'Authorization': `Bearer ${take.token}` ,
              'Content-Type': 'application/json'
          },
-         body:  data 
+         body:   JSON.stringify(data)
      }).then(()=>{
         res.status(201).json({message: 'bien'})
      });
