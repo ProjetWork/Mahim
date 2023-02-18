@@ -73,11 +73,12 @@ app.post('/otp',async(req,res)=>{
    
 })
 //pour le message de la creation utilisateur 
-let name = req.body.nom + ' '+ req.body.prenom
+
 app.post('/createuser',async(req,res)=>{
+    let name = req.body.nom + ' '+ req.body.prenom
     const reftoken = await getDoc(doc(db,"APPINFO", "e1fBtAfuGrhhOKtjXVDZ")) 
        if(reftoken.exists()){
-          let take = reftoken.data()
+          let take = reftoken.data() 
           let data= {
             'outboundSMSMessageRequest': {
               'address': `tel:+224${req.body.numero}`,   
@@ -193,7 +194,7 @@ app.post('/user',(req,res)=>{
          numero : req.body.numero , 
          nomE : req.body.nome 
        })
-       return res.status(201).json({message:"succes"})
+        res.status(201).json({message:"succes"})
   })
 })
 
@@ -205,6 +206,6 @@ app.listen(4000,()=>{
 
 app.use((err, req, res, next) => {
     console.error(err.message) 
-    next()
+    return res.status(201).json({message:"succes"})
   })
 
